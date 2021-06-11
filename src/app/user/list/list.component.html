@@ -1,0 +1,11 @@
+<button (click)="reloadUsers()">Reload Users</button>
+<div *ngIf="isLoading$ | async">Loading...</div>
+<ng-container *ngIf="!(isLoading$ | async)">
+  <ng-template #noUsers>
+    <div>No Users</div>
+  </ng-template>
+  <ng-template #list>
+    <div *ngFor="let user of (users$ | async)">{{user.email}}</div>
+  </ng-template>
+  <ng-container *ngTemplateOutlet="(users$ | async)?.length === 0 ? noUsers : list"></ng-container>
+</ng-container>
