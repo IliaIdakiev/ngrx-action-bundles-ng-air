@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { merge } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
+import { filter, first, mapTo, shareReplay } from 'rxjs/operators';
 import { UserListModel } from '../+store/models';
 
 @Component({
@@ -15,7 +15,7 @@ export class ListComponent implements OnDestroy {
     this.userListModel.loadUsers$.pipe(mapTo(true)),
     this.userListModel.loadUsersSuccess$.pipe(mapTo(false)),
     this.userListModel.loadUsersFailure$.pipe(mapTo(false))
-  );
+  ).pipe(shareReplay(1));
 
   users$ = this.userListModel.users$;
 
@@ -28,6 +28,9 @@ export class ListComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    this.isLoading$.pipe(first(), filter(val => !!val)).subscribe(() => {
+      this.userListModel.loadUsersCancel();
+    });
     this.userListModel.loadUsersClear();
   }
 }

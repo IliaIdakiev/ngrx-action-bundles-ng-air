@@ -26,6 +26,10 @@ export class UserListModel {
     this.store.dispatch(userListActions.loadUsersClear());
   }
 
+  loadUsersCancel() {
+    this.store.dispatch(userListActions.loadUsersCancel());
+  }
+
 }
 
 @Injectable({
