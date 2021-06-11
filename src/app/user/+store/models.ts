@@ -1,8 +1,34 @@
 import { Injectable } from "@angular/core";
 import { Actions, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
+import { Connect } from "ngrx-action-bundles";
 import { userDetailActions, userListActions } from "./actions";
+import { userListBundles } from "./bundles";
 import { userListSelectors, userDetailSelectors } from "./selectors";
+
+
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class UserListModel {
+
+//   users$ = this.store.select(userListSelectors.userList);
+
+//   loadUsers$ = this.actions$.pipe(ofType(userListActions.loadUsers));
+//   loadUsersSuccess$ = this.actions$.pipe(ofType(userListActions.loadUsersSuccess));
+//   loadUsersFailure$ = this.actions$.pipe(ofType(userListActions.loadUsersFailure));
+
+//   constructor(private store: Store, private actions$: Actions) { }
+
+//   loadUsers() {
+//     this.store.dispatch(userListActions.loadUsers());
+//   }
+
+//   loadUsersClear() {
+//     this.store.dispatch(userListActions.loadUsersClear());
+//   }
+
+// }
 
 
 @Injectable({
@@ -10,21 +36,10 @@ import { userListSelectors, userDetailSelectors } from "./selectors";
 })
 export class UserListModel {
 
-  users$ = this.store.select(userListSelectors.userList);
+  actions = this.connect.connectBundles(userListBundles);
+  selectors = this.connect.connectSelectors(userListSelectors);
 
-  loadUsers$ = this.actions$.pipe(ofType(userListActions.loadUsers));
-  loadUsersSuccess$ = this.actions$.pipe(ofType(userListActions.loadUsersSuccess));
-  loadUsersFailure$ = this.actions$.pipe(ofType(userListActions.loadUsersFailure));
-
-  constructor(private store: Store, private actions$: Actions) { }
-
-  loadUsers() {
-    this.store.dispatch(userListActions.loadUsers());
-  }
-
-  loadUsersClear() {
-    this.store.dispatch(userListActions.loadUsersClear());
-  }
+  constructor(private connect: Connect) { }
 
 }
 

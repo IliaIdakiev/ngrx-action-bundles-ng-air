@@ -1,5 +1,6 @@
 import { ActionReducerMap, createReducer, on } from '@ngrx/store';
-import { userDetailActions, userListActions } from './actions';
+import { userDetailActions } from './actions';
+import { loadUserListBundle } from './bundles';
 
 export interface IUserListState {
   userList: any[] | null;
@@ -9,11 +10,18 @@ const initialUserListState: IUserListState = {
   userList: null
 };
 
+// export const userListReducer = createReducer(
+//   initialUserListState,
+//   on(userListActions.loadUsersSuccess, (state, { users }) => ({ ...state, userList: users })),
+//   on(userListActions.loadUsersClear, () => ({ ...initialUserListState }))
+// );
+
 export const userListReducer = createReducer(
   initialUserListState,
-  on(userListActions.loadUsersSuccess, (state, { users }) => ({ ...state, userList: users })),
-  on(userListActions.loadUsersClear, () => ({ ...initialUserListState }))
+  on(loadUserListBundle.creators.loadUsersSuccess, (state, { payload: { users: userList } }) => ({ ...state, userList })),
+  on(loadUserListBundle.creators.loadUsersClear, () => ({ ...initialUserListState }))
 );
+
 
 
 export interface IUserDetailState {
@@ -29,6 +37,7 @@ export const userDetailReducer = createReducer(
   on(userDetailActions.loadUserSuccess, (state, { user }) => ({ ...state, user })),
   on(userDetailActions.loadUserClear, () => ({ ...initialDetailState }))
 );
+
 
 export const userModuleStoreName = 'user';
 

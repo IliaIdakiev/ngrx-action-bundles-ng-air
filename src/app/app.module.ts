@@ -10,6 +10,7 @@ import { reducers } from './+store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { NgrxActionBundlesModule } from 'ngrx-action-bundles';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    NgrxActionBundlesModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument({})
