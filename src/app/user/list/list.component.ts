@@ -31,6 +31,6 @@ export class ListComponent implements OnDestroy {
     this.isLoading$.pipe(first(), filter(val => !!val)).subscribe(() => {
       this.userListModel.actions.dispatch.loadUsersCancel();
     });
-    this.userListModel.actions.dispatch.loadUsersCancel();
+    this.userListModel.actions.dispatch.loadUsersClear();
   }
 }
